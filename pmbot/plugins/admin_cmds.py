@@ -34,6 +34,9 @@ async def get_info(e):
 
     my_msg = await e.reply("`Getting Info for this user..`")
     user_id = await get_user_from_msg_id(e.reply_to_msg_id)
+    if not user_id:
+        await my_msg.edit("`Could not Found User associated with this Message..`")
+        return
 
     try:
         entity = await e.client.get_entity(user_id)
@@ -69,7 +72,7 @@ async def get_info(e):
 @pmbot(pattern="block", owner_only=True, take_args=True, private=True)
 async def ban_users(e):
     global BANNED_USERS
-    args = e.pattern_match.group(2)
+    args = e.pattern_match.group(1)
     reply = e.reply_to_msg_id
     if not reply and not args:
         msg = "Use Like: \n • /ban user_id \n • OR reply /ban to Message of that User."
@@ -98,7 +101,7 @@ async def ban_users(e):
 @pmbot(pattern="unblock", owner_only=True, take_args=True, private=True)
 async def unban_users(e):
     global BANNED_USERS
-    args = e.pattern_match.group(2)
+    args = e.pattern_match.group(1)
     reply = e.reply_to_msg_id
     if not reply and not args:
         msg = "Use Like: \n • /unban user_id \n • OR reply /unban to Message of that User."
@@ -154,10 +157,11 @@ async def broad_cast(e):
     success, failed = 0, 0
     for user_id in allUsers:
         try:
+            await asyncio.sleep(sleep_time)
             await e.client.send_message(user_id, to_send)
             success += 1
         except Exception:
-            LOGS.error(f"Failed to Broadcast at {user_id}")
+            LOGS.error(f"Failed to Broadcast Message at {user_id}")
             failed += 1
         else:
             left_users = len(allUsers) - (success + failed)
@@ -169,8 +173,9 @@ async def broad_cast(e):
                 eta=eta,
             )
             await my_msg.edit(edit_text)
-        finally:
-            await asyncio.sleep(sleep_time)
 
-    last = f"**Successfully Broadcasted to {success} Users ✨✨ \nFailed in {failed} Users** \n\n__failed chats are mentioned in Logs__"
+    await asyncio.sleep(2)
+    edit_msg = f"**Successfully Broadcasted to {success} Users.** ✨✨"
+    if failed:
+        edit_msg += f"\n**Failed in {failed} Users** \n\n__failed chats are saved in logs__"
     await my_msg.edit(last)

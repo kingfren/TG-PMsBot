@@ -45,6 +45,9 @@ async def callbacks(e):
         )
         await e.edit(edit_text, buttons=_back_button)
 
+    elif cb_data == "start":
+        await e.answer(url=f"https://t.me/{bot.me.username}?start=start")
+
     elif cb_data == "fsub":
         if not Config.FORCE_SUBSCRIBE:
             return await e.answer()

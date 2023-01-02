@@ -17,7 +17,7 @@ USER_INFO_STR = """
 """
 
 BROADCAST_STR = """
-**Broadcasting to {total} Users ✨**
+**Broadcasting to {total} Users.. ✨**
 
 **Success:** `{success}`
 **Fail:** `{failed}`
@@ -28,18 +28,18 @@ HELP_STRING = """
 **•• All Commands of this Bot ••**
 
 /help - Get this text again.
-/start - Check if bot is Alive and Running.
+/start - Check whether Bot is Running.
 /ping - Check Latency.
 /id - Get User/Chat ID.
 /logs - (owner) - Get Bot Logs.
 /info - (owner) - Get User Info.
-/block - (owner) - Block the User from using Bot.
 /unblock - (owner) - Unblock User.
+/block - (owner) - Block User from using Bot.
 /broadcast - (owner) - Broadcast a Message to all Bot Users.
 /listblocked - (owner) - List Blocked Users of Bot.
 
-~ __'/' and '!' can be Used as Handlers__
-~ __Commands with owner tag, Can only be used by my Owner__
+~ __'/' and '!' can be used as handlers..__
+~ __Commands with owner tag, can only be used by Owner.__
 """
 
 START_STRING = """

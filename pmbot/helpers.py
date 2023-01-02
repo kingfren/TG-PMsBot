@@ -157,6 +157,6 @@ async def get_user_from_msg_id(msg_id):
 async def add_user_to_db(user_id):
     global BOT_USERS
     key = "_PMBOT_USERS"
-    if user_id not in BOT_USERS:
+    if user_id not in BOT_USERS and user_id != Config.OWNER_ID:
         BOT_USERS.append(user_id)
         await redis.set_key(key, BOT_USERS)
