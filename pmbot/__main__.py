@@ -22,7 +22,7 @@ def load_plugins():
 
 async def get_owner():
     try:
-        LOGS.info(f"Checking - OWNER_ID..")
+        LOGS.info(f"Checking - OWNER_ID ..")
         bot.owner = await bot.get_entity(Config.OWNER_ID)
         mention = (
             ("@" + bot.owner.username) if bot.owner.username else bot.owner.first_name
@@ -35,7 +35,7 @@ async def get_owner():
 
 
 async def startup_funcs():
-    from .helper import BANNED_USERS, BOT_USERS, set_fsub_chat
+    from .helpers import BANNED_USERS, BOT_USERS, set_fsub_chat
 
     banned = await redis.get_key("_PMBOT_BANNED_USERS")
     if banned and type(banned) == set:
@@ -58,7 +58,7 @@ async def startup_funcs():
 
 async def main():
     try:
-        LOGS.info("Trying to Login with Bot..")
+        LOGS.info("Trying to Login as Bot..")
         await bot.start(bot_token=Config.BOT_TOKEN)
     except BaseException as exc:
         LOGS.exception(exc)

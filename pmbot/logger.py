@@ -18,7 +18,7 @@ if int(platform.python_version_tuple()[1]) < 10:
 # ----------------------------------------------------------------------------
 
 LOGS = logging.getLogger("PMBot")
-format = "%(asctime)s - %(name)s - [%(levelname)s] - %(message)s"
+format = "%(asctime)s - %(name)s [%(levelname)s] : %(message)s"
 
 # ----------------------------------------------------------------------------
 
