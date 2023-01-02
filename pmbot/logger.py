@@ -8,6 +8,7 @@ from . import __bot_version__
 
 # -----------------------------------------------------------------
 
+
 if int(platform.python_version_tuple()[1]) < 10:
     handler = logging.FileHandler
     handler._builtin_open = open
@@ -17,8 +18,7 @@ if int(platform.python_version_tuple()[1]) < 10:
 # ----------------------------------------------------------------------------
 
 LOGS = logging.getLogger("PMBot")
-_format = "%(asctime)s - %(name)s - [%(levelname)s] - %(filename)s – %(message)s"
-format = logging.Formatter(_format, datefmt="%d/%m, %H:%M:%S")
+format = "%(asctime)s - %(name)s - [%(levelname)s] - %(message)s"
 
 # ----------------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ logging.basicConfig(
     ],
 )
 
-coloredlogs.install(level=None, logger=LOGS, fmt=_format)
+coloredlogs.install(level=None, logger=LOGS, fmt=format)
 
 # ----------------------------------------------------------------------------
 
