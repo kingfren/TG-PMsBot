@@ -17,11 +17,11 @@ USER_INFO_STR = """
 """
 
 BROADCAST_STR = """
-**Broadcasting to {total} Users.. ✨**
+✨ **Broadcasting this Message to {total} Users..**
 
-**Success:** `{success}`
-**Fail:** `{failed}`
-**ETA:** `{eta}`
+✅ **Success:** `{success}`
+🚫 **Fail:** `{failed}`
+⌛ **ETA:** `{eta}`
 """
 
 HELP_STRING = """

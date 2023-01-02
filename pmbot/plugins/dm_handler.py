@@ -12,7 +12,7 @@ async def pm_forwards(e):
         fwded = await e.forward_to(bot.owner)
         await save_msg_id(fwded.id, user_id)
         if e.fwd_from:
-            x = f"**Message Sent by: ** \n\n**User ID:** `{msg.sender_id}` \n**Mention:** {mention(msg.sender)}"
+            x = f"**Message Sent by: ** \n\n**User ID:** `{e.sender_id}` \n**Mention:** {mention(e.sender)}"
             await fwded.reply(x)
 
     elif e.is_reply:  # sent by owner

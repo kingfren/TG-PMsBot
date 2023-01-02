@@ -144,11 +144,11 @@ async def list_banned_users(e):
 async def broad_cast(e):
     sleep_time = 5
     if not e.is_reply:
-        await e.reply("Reply to the Message You want to Broadcast")
+        await e.reply("`Reply to the Message You want to Broadcast..`")
         return
 
-    my_msg = await e.reply("`Please Wait..`")
     to_send = await e.get_reply_message()
+    my_msg = await to_send.reply("`Please Wait..`")
     allUsers = await redis.get_key("_PMBOT_USERS")
     if not allUsers:
         await my_msg.edit("`No Users in My Database..` ☠️")
@@ -175,7 +175,7 @@ async def broad_cast(e):
             await my_msg.edit(edit_text)
 
     await asyncio.sleep(2)
-    edit_msg = f"**Successfully Broadcasted to {success} Users.** ✨✨"
+    edit_msg = f"**Successfully Broadcasted this Message to {success} Users.** ✨✨"
     if failed:
         edit_msg += (
             f"\n**Failed in {failed} Users** \n\n__failed chats are saved in logs__"

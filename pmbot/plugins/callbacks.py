@@ -72,4 +72,4 @@ async def callbacks(e):
             telethon=__version__,
             source="https://github.com/libgnu/TG-PMsBot",
         )
-        await e.edit(edit_text, buttons=_back_button)
+        await e.edit(edit_text, buttons=_back_button, link_preview=False)

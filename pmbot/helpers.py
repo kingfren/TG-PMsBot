@@ -58,8 +58,8 @@ class Cache:
 
 # Force Subscribe handlers
 
-FSUBBED_USERS = Cache(maxlen=150, auto_clear=24 * 60 * 60)
-FSUB_CHANNEL = Cache(maxlen=1, auto_clear=7200)
+FSUBBED_USERS = Cache(maxlen=200, auto_clear=6 * 60 * 60)
+FSUB_CHANNEL = Cache(maxlen=1, auto_clear=10800)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
