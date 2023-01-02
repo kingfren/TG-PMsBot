@@ -1,7 +1,10 @@
 import logging
 import platform
 
+import coloredlogs
+
 from . import __bot_version__
+
 
 # -----------------------------------------------------------------
 
