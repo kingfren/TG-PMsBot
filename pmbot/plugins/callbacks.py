@@ -64,4 +64,3 @@ async def callbacks(e):
             source="https://github.com/Libgnu/PMBot",
         )
         await e.edit(edit_text, buttons=_back_button)
- 

@@ -24,7 +24,9 @@ async def get_owner():
     try:
         LOGS.info(f"Checking - OWNER_ID..")
         bot.owner = await bot.get_entity(Config.OWNER_ID)
-        mention = "@" + bot.owner.username if bot.owner.username or bot.owner.first_name
+        mention = (
+            ("@" + bot.owner.username) if bot.owner.username else bot.owner.first_name
+        )
         LOGS.info(f"Found Owner - {mention}")
     except Exception:
         LOGS.exception()
@@ -50,7 +52,7 @@ async def startup_funcs():
     if Config.FORCE_SUBSCRIBE:
         fsub = await set_fsub_chat()
         if fsub:
-            channel = "@" + fsub.username if fsub.username else fsub.title
+            channel = ("@" + fsub.username) if fsub.username else fsub.title
             LOGS.info(f"Force Subscribe Channel Set to - {channel}")
 
 

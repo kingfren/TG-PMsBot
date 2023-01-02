@@ -18,6 +18,7 @@ BOT_USERS = list()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class Cache:
     sleepTime = 600
 
@@ -49,6 +50,7 @@ class Cache:
                     except ValueError:
                         pass
 
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Force Subscribe handlers
@@ -59,6 +61,7 @@ FSUB_CHANNEL = Cache(maxlen=1, auto_clean=7200)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Fsub Helpers
+
 
 async def set_fsub_chat():
     try:
@@ -97,6 +100,7 @@ async def fsub_checker(user_id):
         return True
     except UserNotParticipantError:
         return
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

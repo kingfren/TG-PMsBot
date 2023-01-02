@@ -80,4 +80,3 @@ Send me any message I will forward it to my Owner.**
 
 ‍💻 **Developer:**  [@libgnu](https://telegram.dog/spemgod)
 """
-

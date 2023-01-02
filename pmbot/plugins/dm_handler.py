@@ -2,7 +2,7 @@ from . import bot, Config, pmbot, mention
 from .helpers import get_user_from_msg_id, save_msg_id
 
 
-pmFunc = lambda e: e.is_private not e.text.startswith(("/", "!")),
+pmFunc = lambda e: e.is_private and not e.text.startswith(("/", "!"))
 
 
 @pmbot(pattern=None, forwards=None, func=pmFunc)
