@@ -14,8 +14,8 @@ try:
     bot = TelegramClient(
         None, Config.API_ID, Config.API_HASH, flood_sleep_threshold=300
     )
-except Exception:
-    LOGS.exception()
+except Exception as exc:
+    LOGS.exception(exc)
     LOGS.critical("Error While Starting Telethon")
     quit()
 

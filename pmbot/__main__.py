@@ -28,8 +28,8 @@ async def get_owner():
             ("@" + bot.owner.username) if bot.owner.username else bot.owner.first_name
         )
         LOGS.info(f"Found Owner - {mention}")
-    except Exception:
-        LOGS.exception()
+    except Exception as exc:
+        LOGS.exception(exc)
         LOGS.critical("Master, Please /start the bot Once 👀")
         quit()
 
@@ -60,8 +60,8 @@ async def main():
     try:
         LOGS.info("Trying to Login with Bot..")
         await bot.start(bot_token=Config.BOT_TOKEN)
-    except BaseException:
-        LOGS.exception()
+    except BaseException as exc:
+        LOGS.exception(exc)
         LOGS.critical("Error while Connecting to Telegram.")
         quit()
 
