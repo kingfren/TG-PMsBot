@@ -5,9 +5,9 @@ __bot_version__ = "3.5.3"
 
 from telethon import TelegramClient
 
-from .logger import *
-from .config import *
-from .database import *
+from .logger import LOGS
+from .config import Config
+from .database import DataBase
 
 
 try:

@@ -3,9 +3,6 @@ from telethon import Button
 from . import mention, pmbot, bot, Config, START_BUTTONS, START_STRING
 
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
 @pmbot(pattern="start", take_args=True)
 async def start(e):
     _mention = mention(e.sender)

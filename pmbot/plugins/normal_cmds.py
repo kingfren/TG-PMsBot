@@ -4,9 +4,6 @@ from ..helpers import time_formatter
 from . import Config, pmbot, HELP_STRING
 
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
 @pmbot(pattern="ping")
 async def ping_bot(e):
     start = time()
@@ -19,15 +16,9 @@ async def ping_bot(e):
     )
 
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
 @pmbot(pattern="help", private=True)
 async def helper(e):
     await e.reply(HELP_STRING)
-
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 @pmbot(pattern="ids?")

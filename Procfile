@@ -1,0 +1,1 @@
+pmbot: python -m pmbot

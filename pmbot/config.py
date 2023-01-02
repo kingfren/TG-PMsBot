@@ -1,5 +1,3 @@
-__all__ = ["Config"]
-
 from os import environ, getenv
 from time import time, tzset
 
@@ -26,9 +24,8 @@ class Configs:
     OWNER_ID = int(getenv("OWNER_ID"))
 
     # optional variables.
-    FORCE_SUBSCRIBE = getenv("FORCE_SUBSCRIBE")
-    SUDO_USERS = getenv("SUDO_USERS")
-    TIMEZONE = getenv("TZ", "Asia/Kolkata")
+    FORCE_SUBSCRIBE = getenv("FORCE_SUBSCRIBE")  # put chat id
+    TZ = getenv("TZ", "Asia/Kolkata")  # timezone
     STARTUP_TIME = time()  # automatic
 
 
@@ -48,18 +45,16 @@ imp_vars = (
 )
 missing = list(filter(getattr(Config, key, None), imp_vars))
 if missing:
-    LOGS.critical(f"Missing Vars:  {', '.join(missing)}")
+    LOGS.critical(f"Some Compulsory Vars are Missing:  {', '.join(missing)}")
     quit()
 
-sudos = Config.SUDO_USERS
-fsub = Config.FORCE_SUBSCRIBE
-environ["TZ"] = Config.TIMEZONE
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# set timezone
+environ["TZ"] = Config.TZ
 tzset()
 
-if sudos:
-    Config.SUDO_USERS = tuple(int(x) for x in sudos.split())
-if fsub:
-    try:
-        Config.FORCE_SUBSCRIBE = int(fsub)
-    except ValueError:
-        pass
+# fsub
+fsub = Config.FORCE_SUBSCRIBE
+if fsub and fsub[1:].isdigit():
+    Config.FORCE_SUBSCRIBE = int(fsub)

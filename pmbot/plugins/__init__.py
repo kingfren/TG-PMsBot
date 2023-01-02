@@ -65,7 +65,7 @@ CB_STAT_STRING = """
 """
 
 CB_ABOUT_STRING = """
-**This is Just a PMBot. I can help in Managing PM easily.
+**This is Just a PMBot. I can help in Managing DM's.
 Send me any message I will forward it to my Owner.**
 
 🤖 **Bot's Name:**  [{my_name}](https://t.me/{my_username})
@@ -74,9 +74,9 @@ Send me any message I will forward it to my Owner.**
 
 🔄 **Source Code:**  [{my_version}]({source})
 
-📝 **Language:**  [Python {python}](https://www.python.org)
+📝 **Language:**  [Python {python}](https://docs.python.org/3)
 
-📚 **Library:**  [Telethon {telethon}](https://docs.pyrogram.org)
+📚 **Library:**  [Telethon {telethon}](https://docs.telethon.dev)
 
 ‍💻 **Developer:**  [@libgnu](https://telegram.dog/spemgod)
 """

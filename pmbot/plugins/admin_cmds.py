@@ -138,7 +138,7 @@ async def list_banned_users(e):
 
 @pmbot(pattern="broadcast", take_args=True, owner_only=True)
 async def broad_cast(e):
-    sleep_time = 4
+    sleep_time = 5
     if not e.is_reply:
         await e.reply("Reply to the Message You want to Broadcast")
         return

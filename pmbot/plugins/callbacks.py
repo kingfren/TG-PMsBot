@@ -61,6 +61,6 @@ async def callbacks(e):
             owner=mention(bot.owner),
             python=python_version(),
             telethon=__version__,
-            source="https://github.com/Libgnu/PMBot",
+            source="https://github.com/Libgnu/TG-PMsBot",
         )
         await e.edit(edit_text, buttons=_back_button)

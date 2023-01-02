@@ -1,5 +1,3 @@
-__all__ = ["LOGS"]
-
 import logging
 import platform
 
