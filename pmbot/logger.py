@@ -24,7 +24,7 @@ format = "%(asctime)s - %(name)s [%(levelname)s] : %(message)s"
 
 logging.basicConfig(
     format=format,
-    level=logging.DEBUG,
+    level=logging.INFO,
     datefmt="%d/%m, %H:%M:%S",
     handlers=[
         logging.FileHandler("logs.txt", mode="w+"),

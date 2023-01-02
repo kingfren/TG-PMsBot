@@ -1,7 +1,7 @@
 import asyncio
 from os import remove
 
-from ..helpers import time_formatter, get_user_from_msg_id, BANNED_USERS
+from ..helpers import time_formatter, MESSAGE_IDS, BANNED_USERS
 from . import (
     get_display_name,
     LOGS,
@@ -33,7 +33,7 @@ async def get_info(e):
         return
 
     my_msg = await e.reply("`Getting Info for this user..`")
-    user_id = await get_user_from_msg_id(e.reply_to_msg_id)
+    user_id = MESSAGE_IDS.get(e.reply_to_msg_id)
     if not user_id:
         await my_msg.edit("`Could not Found User associated with this Message..`")
         return
@@ -85,16 +85,16 @@ async def ban_users(e):
             return
         to_ban = int(args)
     else:
-        to_ban = await get_user_from_msg_id(reply)
+        to_ban = MESSAGE_IDS.get(reply)
         if not to_ban:
             await e.reply("`Could not Found User associated with this Message..`")
             return
 
     if to_ban in BANNED_USERS:
-        return await e.reply("`This User is Already Banned..` 💪")
+        return await e.reply("__This User is Already Banned..__ 💪")
     BANNED_USERS.add(to_ban)
     await redis.set_key(key, BANNED_USERS)
-    await e.reply(f"Successfully Banned - `{to_ban}`")
+    await e.reply(f"**Successfully Banned -** `{to_ban}`")
 
 
 @pmbot(pattern="unban", owner_only=True, take_args=True, private=True)
@@ -114,16 +114,16 @@ async def unban_users(e):
             return
         to_unban = int(args)
     else:
-        to_unban = await get_user_from_msg_id(reply)
+        to_unban = MESSAGE_IDS.get(reply)
         if not to_unban:
             await e.reply("`Could not Found User associated with this Message..`")
             return
 
     if to_unban not in BANNED_USERS:
-        return await e.reply(f"`User {to_unban} was never Banned..` 🐸")
+        return await e.reply(f"User `{to_unban}` was never Banned.. 🚫")
     BANNED_USERS.remove(to_unban)
     await redis.set_key(key, BANNED_USERS)
-    await e.reply(f"Successfully UnBanned - `{to_unban}`")
+    await e.reply(f"**Successfully UnBanned -** `{to_unban}`")
 
 
 @pmbot(pattern="listbanned", owner_only=True, private=True)
@@ -151,7 +151,7 @@ async def broad_cast(e):
     to_send = await e.get_reply_message()
     allUsers = await redis.get_key("_PMBOT_USERS")
     if not allUsers:
-        await my_msg.edit("No Users in My Database ☠️")
+        await my_msg.edit("`No Users in My Database..` ☠️")
         return
 
     success, failed = 0, 0

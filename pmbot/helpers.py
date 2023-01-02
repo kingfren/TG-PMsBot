@@ -13,8 +13,11 @@ from . import *
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+# Having Cache of frequently used stuff.
+
 BANNED_USERS = set()
 BOT_USERS = list()
+MESSAGE_IDS = dict()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -139,19 +142,8 @@ def time_formatter(ms):
 
 async def save_msg_id(msg_id, user_id):
     key = "_PMBOT_MESSAGE_IDS"
-    value = await redis.get_key(key)
-    if value and type(value) is dict:
-        value.update({msg_id: user_id})
-    else:
-        value = {msg_id: user_id}
-    await redis.set_key(key, value)
-
-
-async def get_user_from_msg_id(msg_id):
-    key = "_PMBOT_MESSAGE_IDS"
-    data = await redis.get_key(key)
-    if data:
-        return data.get(msg_id)
+    MESSAGE_IDS.update({msg_id: user_id})
+    await redis.set_key(key, MESSAGE_IDS)
 
 
 async def add_user_to_db(user_id):

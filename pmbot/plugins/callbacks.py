@@ -7,7 +7,7 @@ from telethon import Button, __version__
 
 from ..helpers import mention, time_formatter
 from .. import bot, redis, Config, __bot_version__
-from . import get_display_name, HELP_STRING, CB_STAT_STRING, START_BUTTONS
+from . import get_display_name, HELP_STRING, CB_ABOUT_STRING, CB_STAT_STRING, START_BUTTONS, START_STRING
 
 
 _back_button = [Button.inline("Back 🔙", data="CB_default")]

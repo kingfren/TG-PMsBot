@@ -35,19 +35,25 @@ async def get_owner():
 
 
 async def startup_funcs():
-    from .helpers import BANNED_USERS, BOT_USERS, set_fsub_chat
+    from .helpers import BANNED_USERS, BOT_USERS, MESSAGE_IDS, set_fsub_chat
 
     banned = await redis.get_key("_PMBOT_BANNED_USERS")
     if banned and type(banned) == set:
         BANNED_USERS |= banned
     else:
-        await redis.del_key("_PMBOT_BANNED_USERS")
+        await redis.set_key("_PMBOT_BANNED_USERS", BANNED_USERS)
 
     users = await redis.get_key("_PMBOT_USERS")
     if users and type(users) == list:
         BOT_USERS.extend(users)
     else:
-        await redis.del_key("_PMBOT_USERS")
+        await redis.set_key("_PMBOT_USERS", [])
+
+    msg_ids = await redis.get_key("_PMBOT_MESSAGE_IDS")
+    if msg_ids and type(msg_ids) == dict:
+        MESSAGE_IDS |= msg_ids
+    else:
+        await redis.set_key("_PMBOT_MESSAGE_IDS", {})
 
     if Config.FORCE_SUBSCRIBE:
         fsub = await set_fsub_chat()
