@@ -5,9 +5,9 @@ from platform import python_version
 from telethon.events import callbackquery
 from telethon import Button, __version__
 
-from ..helpers import time_formatter
+from ..helpers import mention, time_formatter
 from .. import bot, redis, Config, __bot_version__
-from . import mention, get_display_name, HELP_STRING, CB_STAT_STRING, START_BUTTONS
+from . import get_display_name, HELP_STRING, CB_STAT_STRING, START_BUTTONS
 
 
 _back_button = [Button.inline("Back 🔙", data="CB_default")]
@@ -30,7 +30,10 @@ async def callbacks(e):
             buttons.append([Button.inline("Stats Of Bot ⌛", data="CB_stats")])
         else:
             buttons.append([Button.inline("Help 📘", data="CB_help")])
-        await e.edit(START_STRING, buttons=buttons)
+        await e.edit(
+            START_STRING.format(mention(e.sender)),
+            buttons=buttons,
+        )
 
     elif cb_data == "stats":
         allUsers = await redis.get_key("_PMBOT_USERS")
@@ -51,6 +54,7 @@ async def callbacks(e):
             await e.answer(res, alert=True)
         else:
             await e.answer("uwu Thanks for Joining !! ✨✨")
+            await asyncio.sleep(1.5)
             await e.edit("**__You Can Use this Bot normally Now..__**", buttons=None)
 
     elif cb_data == "about":
@@ -61,6 +65,6 @@ async def callbacks(e):
             owner=mention(bot.owner),
             python=python_version(),
             telethon=__version__,
-            source="https://github.com/Libgnu/TG-PMsBot",
+            source="https://github.com/libgnu/TG-PMsBot",
         )
         await e.edit(edit_text, buttons=_back_button)

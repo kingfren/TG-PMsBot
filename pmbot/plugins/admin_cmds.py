@@ -123,7 +123,8 @@ async def unban_users(e):
     await e.reply(f"Successfully UnBanned - `{to_unban}`")
 
 
-@pmbot(pattern="listb(anned|locked)", owner_only=True, private=True)
+@pmbot(pattern="listbanned", owner_only=True, private=True)
+@pmbot(pattern="listblocked", owner_only=True, private=True)
 async def list_banned_users(e):
     if not BANNED_USERS:
         return await e.reply("`No Users Have Been Blocked yet..`")

@@ -6,11 +6,11 @@ from . import Config, pmbot, HELP_STRING
 
 @pmbot(pattern="ping")
 async def ping_bot(e):
-    start = time()
+    start_time = time()
     msg = await e.reply("`Pong !!`")
-    end = time()
-    resp = round((end - start) * 1000)
-    uptime = time_formatter((end - Config.STARTUP_TIME) * 1000)
+    end_time = time()
+    resp = round((end_time - start_time) * 1000)
+    uptime = time_formatter((end_time - Config.STARTUP_TIME) * 1000)
     await msg.edit(
         f"**Pong !!** `{resp}ms` \n**Uptime -** `{uptime}`",
     )
@@ -27,11 +27,11 @@ async def get_ids(e):
         await e.reply(f"**User ID:**  `{e.sender_id}`")
         return
     reply = await e.get_reply_message()
-    _format = (
+    _format_txt = (
         ("Replied User's ID", str(reply.sender_id))
         if reply
         else ("User ID", str(e.sender_id))
     )
-    ids_text = "**{}:**  `{}` \n\n".format(*_format)
+    ids_text = "**{}:**  `{}` \n\n".format(*_format_txt)
     ids_text += f"**Chat ID**:  `{e.chat_id}` \n**Message ID:** `{e.id}`"
     await e.reply(ids_text)
