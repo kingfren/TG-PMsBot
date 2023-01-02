@@ -1,7 +1,8 @@
 from telethon import Button
 
-from pmbot.helpers import pmbot, mention, get_display_name
-from pmbot import bot, Config, LOGS, redis
+from pmbot import *
+from pmbot.helpers import mention, get_display_name
+from pmbot._decorator import pmbot
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

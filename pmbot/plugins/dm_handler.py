@@ -2,12 +2,10 @@ from . import bot, Config, pmbot, mention
 from .helpers import get_user_from_msg_id, save_msg_id
 
 
-@pmbot(
-    pattern=None,
-    forwards=None,
-    private=True,
-    func=lambda e: not e.text.startswith(("/", "!")),
-)
+pmFunc = lambda e: e.is_private not e.text.startswith(("/", "!")),
+
+
+@pmbot(pattern=None, forwards=None, func=pmFunc)
 async def pm_forwards(e):
     user_id = e.sender_id
     if user_id != Config.OWNER_ID:

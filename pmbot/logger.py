@@ -7,30 +7,19 @@ from . import __bot_version__
 
 # -----------------------------------------------------------------
 
-
-def fix_logging():
+if int(platform.python_version_tuple()[1]) < 10:
     handler = logging.FileHandler
     handler._builtin_open = open
-
-    def _new_open(self):
-        open_func = self._builtin_open
-        return open_func(self.baseFilename, self.mode)
-
+    _new_open = lambda self: self._builtin_open(self.baseFilename, self.mode)
     setattr(handler, "_open", _new_open)
 
+# ----------------------------------------------------------------------------
 
-if int(platform.python_version_tuple()[1]) < 10:
-    fix_logging()
+LOGS = logging.getLogger("PMBot")
+_format = "%(asctime)s - %(name)s - [%(levelname)s] - %(filename)s – %(message)s"
+format = logging.Formatter(_format, datefmt="%d/%m, %H:%M:%S")
 
-# -----------------------------------------------------------------
-
-LOGS = logging.getLogger("PM-Bot")
-format = logging.Formatter(
-    "%(asctime)s - %(name)s - [%(levelname)s] - %(message)s",
-    datefmt="%d/%m, %H:%M:%S",
-)
-
-# -----------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 logging.basicConfig(
     format=format,
@@ -42,4 +31,10 @@ logging.basicConfig(
     ],
 )
 
-LOGS.info(f"Starting PMBot! - {__bot_version__}")
+coloredlogs.install(level=None, logger=LOGS, fmt=_format)
+
+# ----------------------------------------------------------------------------
+
+LOGS.info("Starting PMBot!")
+LOGS.info(f"Bot Version - {__bot_version__}")
+LOGS.info(f"Python Version - {platform.python_version()}")

@@ -1,9 +1,8 @@
 import asyncio
 from os import remove
 
-from .. import BANNED_USERS, redis
-from ..helpers import time_formatter, get_user_from_msg_id
-from . import LOGS, mention, pmbot, USER_INFO_STR, BROADCAST_STR, get_display_name
+from ..helpers import time_formatter, get_user_from_msg_id, BANNED_USERS
+from . import get_display_name, LOGS, mention, pmbot, redis, USER_INFO_STR, BROADCAST_STR
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -65,8 +64,8 @@ async def ban_users(e):
     args = e.pattern_match.group(2)
     reply = e.reply_to_msg_id
     if not reply and not args:
-        await e.reply(f"Use Like: /ban user_id or reply /ban to Message of that User.")
-        return
+        msg = "Use Like: \n • /ban user_id \n • OR reply /ban to Message of that User."
+        return await e.reply(msg)
 
     key = ""
     if args:
@@ -77,12 +76,11 @@ async def ban_users(e):
     else:
         to_ban = await get_user_from_msg_id(reply)
         if not to_ban:
-            await e.reply("`Could not Found User associated with this Message`")
+            await e.reply("`Could not Found User associated with this Message..`")
             return
 
     if to_ban in BANNED_USERS:
-        await e.reply("`This User is Already Banned.` 🐸")
-        return
+        return await e.reply("`This User is Already Banned..` 💪")
     BANNED_USERS.add(to_ban)
     await redis.set_key(key, BANNED_USERS)
     await e.reply(f"Successfully Banned - `{to_ban}`")
@@ -95,10 +93,8 @@ async def unban_users(e):
     args = e.pattern_match.group(2)
     reply = e.reply_to_msg_id
     if not reply and not args:
-        await e.reply(
-            f"Use Like: /unban user_id or reply /unban to Message of that User."
-        )
-        return
+        msg = "Use Like: \n • /unban user_id \n • OR reply /unban to Message of that User."
+        return await e.reply(msg)
 
     key = ""
     if args:
@@ -109,12 +105,11 @@ async def unban_users(e):
     else:
         to_unban = await get_user_from_msg_id(reply)
         if not to_unban:
-            await e.reply("`Could not Found User associated with this Message`")
+            await e.reply("`Could not Found User associated with this Message..`")
             return
 
     if to_unban not in BANNED_USERS:
-        await e.reply("`This User Was not Banned` 🐸")
-        return
+        return await e.reply(f"`User {to_unban} was never Banned..` 🐸")
     BANNED_USERS.remove(to_unban)
     await redis.set_key(key, BANNED_USERS)
     await e.reply(f"Successfully UnBanned - `{to_unban}`")

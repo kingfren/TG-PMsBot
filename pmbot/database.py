@@ -10,7 +10,7 @@ class DataBase(Redis):
     def __init__(self):
         self.lock = Lock()
 
-    def finish_setup(self, host, password, **kwargs):
+    def finish_setup(self, host, password):
         if ":" in host:
             data = host.split(":")
             host = data[0]
@@ -22,19 +22,18 @@ class DataBase(Redis):
             LOGS.error("Port Number not found, Correct your REDIS_URI Variable.")
             quit()
         try:
-            LOGS.info("Trying to Connect With Redis")
+            LOGS.info("Trying to Connect With Redis..")
             super().__init__(
                 host=host,
                 port=port,
                 password=password,
                 encoding="utf-8",
                 decode_responses=True,
-                **kwargs,
             )
             if not self.ping():
-                raise Exception("Error while Pinging the Redis DB")
+                raise Exception("Error while Pinging the Redis Connection..")
             else:
-                LOGS.info("Successfully Connected to Redis")
+                LOGS.info("Successfully Connected to Redis DB")
         except Exception as e:
             LOGS.exception(e)
             LOGS.ctitical(f"Error while Connecting to Redis: {e}")

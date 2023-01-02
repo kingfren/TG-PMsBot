@@ -19,5 +19,4 @@ except Exception:
     LOGS.critical("Error While Starting Telethon")
     quit()
 
-BANNED_USERS = set()
 redis = DataBase()

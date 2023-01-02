@@ -1,10 +1,8 @@
 import asyncio
 from collections import deque
 from time import time
-from re import compile
 
-from telethon.events import NewMessage, StopPropagation
-from telethon.errors import FloodWaitError, UserNotParticipantError
+from telethon.errors import UserNotParticipantError
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.messages import GetFullChatRequest
 from telethon.tl.types import Channel, Chat
@@ -15,8 +13,10 @@ from . import *
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Force Subscribe handler
+BANNED_USERS = set()
+BOT_USERS = list()
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 class Cache:
     sleepTime = 600
@@ -49,29 +49,39 @@ class Cache:
                     except ValueError:
                         pass
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Force Subscribe handlers
 
 FSUBBED_USERS = Cache(maxlen=150, auto_clean=24 * 60 * 60)
 FSUB_CHANNEL = Cache(maxlen=1, auto_clean=7200)
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Fsub Helpers
 
 async def set_fsub_chat():
     try:
         entity = await bot.get_entity(Config.FORCE_SUBSCRIBE)
         username = getattr(entity, "username", None)
+
         if username:
             invite_link = f"https://t.me/{username}"
         else:
-            if isinstance(ent, Channel):
+            if isinstance(entity, Channel):
                 full = await bot(GetFullChannelRequest(Config.FORCE_SUBSCRIBE))
-            elif isinstance(ent, Chat):
+            elif isinstance(entity, Chat):
                 full = await bot(GetFullChatRequest(Config.FORCE_SUBSCRIBE))
             else:
                 raise TypeError("Invalid Chat Type..")
+
             if full.full_chat.exported_invite:
                 invite_link = full.full_chat.exported_invite.link
             else:
                 raise TypeError("Invite User Permission Missing")
-        FSUB_CHANNEL.add_data((ent, invite_link))
+
+        FSUB_CHANNEL.add_data((entity, invite_link))
+        return entity
     except Exception:
         LOGS.exception("Error in FORCE_SUBSCRIBE:")
 
@@ -87,69 +97,6 @@ async def fsub_checker(user_id):
         return True
     except UserNotParticipantError:
         return
-
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-# Decorator handlers
-
-
-def pattern_compiler(pattern, take_args):
-    if pattern:
-        formt = rf"^[!/]{pattern}(?:@{bot.me.username})?"
-        formt += " ?(.*)" if take_args else "$"
-        return compile(formt)
-
-
-def pmbot(pattern, owner_only=False, private=False, **kwargs):
-    take_args = kwargs.pop("take_args", 0)
-    if "forwards" not in kwargs:
-        kwargs["forwards"] = False
-    if owner_only:
-        kwargs["from_users"] = Config.OWNER_ID
-
-    def _dec(func):
-        async def defunc(e):
-            if e.sender_id in BANNED_USERS or (bool(private) and not e.is_private):
-                return
-
-            if (
-                e.sender_id != Config.OWNER_ID
-                and Config.FORCE_SUBSCRIBE
-                and e.is_private
-            ):
-                _is_subbed = await fsub_checker(user_id)
-                if not _is_subbed:
-                    _message = "**You need to Join this Channel first.** ☠️✨"
-                    _invite_link = FSUB_CHANNEL()[0][1]
-                    _buttons = [
-                        [Button.url("Join This Channel 🕛", url=_invite_link)],
-                        [Button.inline("Refresh 🔄", data="CB_fsub")],
-                    ]
-                    await e.reply(_message, buttons=_buttons)
-                    return
-
-            try:
-                await func(e)
-            except FloodWaitError as fw:
-                LOGS.error(f"Sleeping for {fw.seconds} seconds..")
-                await asyncio.sleep(fw.seconds + 5)
-                return
-            except StopPropagation:
-                raise StopPropagation
-            except KeyboardInterrupt:
-                pass
-            except BaseException as exc:
-                LOGS.exception(exc)
-
-        pattern = pattern_compiler(pattern, take_args)
-        bot.add_event_handler(
-            defunc, NewMessage(incoming=True, pattern=pattern, **kwargs)
-        )
-        return defunc
-
-    return _dec
-
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -202,11 +149,10 @@ async def get_user_from_msg_id(msg_id):
     if data:
         return data.get(msg_id)
 
+
 async def add_user_to_db(user_id):
+    global BOT_USERS
     key = "_PMBOT_USERS"
-    value = await redis.get_key(key)
-    if value and type(value) is list:
-        value.append(user_id)
-    else:
-        value = [user_id]
-    await redis.set_key(key, value)
+    if user_id not in BOT_USERS:
+        BOT_USERS.append(user_id)
+        await redis.set_key(key, BOT_USERS)

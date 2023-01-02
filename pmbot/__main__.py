@@ -3,8 +3,6 @@ from pathlib import Path
 from importlib import import_module
 
 from . import *
-from . import BANNED_USERS
-from .helper import set_fsub_chat
 
 
 def load_plugins():
@@ -24,27 +22,36 @@ def load_plugins():
 
 async def get_owner():
     try:
-        LOGS.info(f"Checking - OWNER_ID ...")
+        LOGS.info(f"Checking - OWNER_ID..")
         bot.owner = await bot.get_entity(Config.OWNER_ID)
+        mention = "@" + bot.owner.username if bot.owner.username or bot.owner.first_name
+        LOGS.info(f"Found Owner - {mention}")
     except Exception:
         LOGS.exception()
         LOGS.critical("Master, Please /start the bot Once 👀")
         quit()
 
 
-async def update_banned_users():
+async def startup_funcs():
+    from .helper import BANNED_USERS, BOT_USERS, set_fsub_chat
+
     banned = await redis.get_key("_PMBOT_BANNED_USERS")
     if banned and type(banned) == set:
         BANNED_USERS |= banned
-        await redis.set_key("_PMBOT_BANNED_USERS", BANNED_USERS)
     else:
         await redis.del_key("_PMBOT_BANNED_USERS")
 
+    users = await redis.get_key("_PMBOT_USERS")
+    if users and type(users) == list:
+        BOT_USERS.extend(users)
+    else:
+        await redis.del_key("_PMBOT_USERS")
 
-async def startup_func():
-    await get_owner()
-    await update_banned_users()
-    await set_fsub_chat()
+    if Config.FORCE_SUBSCRIBE:
+        fsub = await set_fsub_chat()
+        if fsub:
+            channel = "@" + fsub.username if fsub.username else fsub.title
+            LOGS.info(f"Force Subscribe Channel Set to - {channel}")
 
 
 async def main():
@@ -63,7 +70,8 @@ async def main():
 
     # Redis DB
     redis.finish_setup(Config.REDIS_URI, Config.REDIS_PASSWORD)
-    await startup_func()
+    await get_owner()
+    await startup_funcs()
     load_plugins()
     LOG.info("Bot is Running!")
 

@@ -6,8 +6,8 @@ from telethon.events import callbackquery
 from telethon import Button, __version__
 
 from ..helpers import time_formatter
-from .. import __bot_version__
-from . import bot, mention, redis, Config, get_display_name, HELP_STRING, CB_STAT_STRING, START_BUTTONS
+from .. import bot, redis, Config, __bot_version__
+from . import mention, get_display_name, HELP_STRING, CB_STAT_STRING, START_BUTTONS
 
 
 _back_button = [Button.inline("Back 🔙", data="CB_default")]
