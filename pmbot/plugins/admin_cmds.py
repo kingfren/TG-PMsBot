@@ -177,5 +177,7 @@ async def broad_cast(e):
     await asyncio.sleep(2)
     edit_msg = f"**Successfully Broadcasted to {success} Users.** ✨✨"
     if failed:
-        edit_msg += f"\n**Failed in {failed} Users** \n\n__failed chats are saved in logs__"
+        edit_msg += (
+            f"\n**Failed in {failed} Users** \n\n__failed chats are saved in logs__"
+        )
     await my_msg.edit(last)

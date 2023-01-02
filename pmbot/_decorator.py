@@ -45,9 +45,8 @@ def pmbot(pattern, owner_only=False, private=False, **kwargs):
                 _is_subbed = await fsub_checker(user_id)
                 if not _is_subbed:
                     _message = "**You need to Join this Channel first.** 👇👇"
-                    _invite_link = FSUB_CHANNEL()[0][1]
                     _buttons = [
-                        [Button.url("Join This Channel 🕛", url=_invite_link)],
+                        [Button.url("Join This Channel 🕛", url=FSUB_CHANNEL()[0])],
                         [Button.inline("Refresh 🔄", data="CB_fsub")],
                     ]
                     await e.reply(_message, buttons=_buttons)

@@ -14,7 +14,4 @@ async def start(e):
         else:
             buttons.append([Button.inline("Help 📘", data="CB_help")])
 
-    await e.reply(
-
-buttons=buttons,
-    )
+    await e.reply(text, buttons=buttons)

@@ -54,14 +54,14 @@ class Cache:
                         pass
 
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Force Subscribe handlers
 
 FSUBBED_USERS = Cache(maxlen=150, auto_clear=24 * 60 * 60)
 FSUB_CHANNEL = Cache(maxlen=1, auto_clear=7200)
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Fsub Helpers
 
@@ -86,7 +86,7 @@ async def set_fsub_chat():
             else:
                 raise TypeError("Invite User Permission Missing..")
 
-        FSUB_CHANNEL.add_data((entity, invite_link))
+        FSUB_CHANNEL.add_data(invite_link)
         return entity
     except Exception:
         LOGS.exception("Error in FORCE_SUBSCRIBE:")
@@ -102,14 +102,14 @@ async def fsub_checker(user_id):
     ):
         return True
     try:
-        await bot.get_permissions(FSUB_CHANNEL()[0][0], user_id)
+        await bot.get_permissions(Config.FORCE_SUBSCRIBE, user_id)
         FSUBBED_USERS.add_data(user_id)
         return True
     except UserNotParticipantError:
         return
 
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Helper Functions
 
