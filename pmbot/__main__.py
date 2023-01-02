@@ -71,7 +71,7 @@ async def main():
     LOGS.info(f"Logged in Successfully as @{bot.me.username}")
 
     # Redis DB
-    redis.finish_setup(Config.REDIS_URI, Config.REDIS_PASSWORD)
+    await redis.finish_setup(Config.REDIS_URI, Config.REDIS_PASSWORD)
     await get_owner()
     await startup_funcs()
     load_plugins()

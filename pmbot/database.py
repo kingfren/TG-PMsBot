@@ -1,7 +1,7 @@
 from ast import literal_eval
 from asyncio import Lock
 
-from aioredis import Redis
+from redis.asyncio import Redis
 
 from .logger import LOGS
 
@@ -10,7 +10,7 @@ class DataBase(Redis):
     def __init__(self):
         self.lock = Lock()
 
-    def finish_setup(self, host, password):
+    async def finish_setup(self, host, password):
         if ":" in host:
             data = host.split(":")
             host = data[0]
@@ -30,7 +30,7 @@ class DataBase(Redis):
                 encoding="utf-8",
                 decode_responses=True,
             )
-            if not self.ping():
+            if not await self.ping():
                 raise Exception("Error while Pinging the Redis Connection..")
             else:
                 LOGS.info("Successfully Connected to Redis DB")

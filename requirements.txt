@@ -1,4 +1,4 @@
-aioredis
+redis[hiredis]
 https://github.com/New-dev0/Telethon/archive/diamond.zip
 python-dotenv
 coloredlogs
