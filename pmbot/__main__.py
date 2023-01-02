@@ -75,7 +75,7 @@ async def main():
     await get_owner()
     await startup_funcs()
     load_plugins()
-    LOG.info("Bot is Running!")
+    LOGS.info("Bot is Running!")
 
 
 try:

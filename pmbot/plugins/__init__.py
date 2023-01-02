@@ -51,7 +51,7 @@ START_STRING = """
 
 START_BUTTONS = [
     [
-        Button.url("About 📚", data="CB_about"),
+        Button.inline("About 📚", data="CB_about"),
         Button.inline("Help 📡", data="CB_help"),
     ]
 ]
