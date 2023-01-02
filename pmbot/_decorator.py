@@ -66,9 +66,9 @@ def pmbot(pattern, owner_only=False, private=False, **kwargs):
             except BaseException as exc:
                 LOGS.exception(exc)
 
-        pattern = pattern_compiler(pattern, take_args)
+        _pattern = pattern_compiler(pattern, take_args)
         bot.add_event_handler(
-            defunc, NewMessage(incoming=True, pattern=pattern, **kwargs)
+            defunc, NewMessage(incoming=True, pattern=_pattern, **kwargs)
         )
         return defunc
 
