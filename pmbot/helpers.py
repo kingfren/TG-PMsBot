@@ -27,8 +27,8 @@ class Cache:
 
     def __init__(
         self,
-        maxlen=None,  # max len of cache; None = inf
-        auto_clear=None,  # clear cache time in sec; None = no cleanup
+        maxlen=None,  # max len of cache
+        auto_clear=None,  # clear cache time (s)
     ):
         self.cleaner = auto_clear
         self.data = deque(maxlen=maxlen)
@@ -64,8 +64,6 @@ FSUB_CHANNEL = Cache(maxlen=1, auto_clear=7200)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Fsub Helpers
-
-
 async def set_fsub_chat():
     try:
         entity = await bot.get_entity(Config.FORCE_SUBSCRIBE)
@@ -92,12 +90,18 @@ async def set_fsub_chat():
         LOGS.exception("Error in FORCE_SUBSCRIBE:")
 
 
+def _check_if_subbed_(user_id):
+    users = FSUBBED_USERS()
+    user = filter(lambda n: n[0] == user_id, users)
+    return bool(list(user))
+
+
 async def fsub_checker(user_id):
     if not FSUB_CHANNEL():
         await set_fsub_chat()
     if (
         user_id == Config.OWNER_ID
-        or user_id in FSUBBED_USERS()
+        or _check_if_subbed_(user_id)
         or not FSUB_CHANNEL()  # fsub error
     ):
         return True

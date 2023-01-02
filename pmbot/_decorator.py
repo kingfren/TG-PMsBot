@@ -11,7 +11,6 @@ from .helpers import (
     BOT_USERS,
     fsub_checker,
     FSUB_CHANNEL,
-    FSUBBED_USERS,
 )
 
 from . import bot, Config, LOGS
@@ -46,7 +45,7 @@ def pmbot(pattern, owner_only=False, private=False, **kwargs):
                 if not _is_subbed:
                     _message = "**You need to Join this Channel first.** 👇👇"
                     _buttons = [
-                        [Button.url("Join This Channel 🕛", url=FSUB_CHANNEL()[0])],
+                        [Button.url("Join Channel 🕛", url=FSUB_CHANNEL()[0][0])],
                         [Button.inline("Refresh 🔄", data="CB_fsub")],
                     ]
                     await e.reply(_message, buttons=_buttons)
