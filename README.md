@@ -48,10 +48,11 @@ This Bot can forward Messages between the Owner and other Users of Bot.
 ```sh
 git clone https://github.com/libgnu/TG-PMsBot pmbot
 cd pmbot
+pip3 install --no-cache-dir -r requirements.txt
 cp .env.sample .env
 nano .env # fill your credentials here
 screen -S pmbot
-python -m pmbot
+python3 -m pmbot
 ```
 • PRESS - CTRL + A then CTRL + D to detach from screen.
 

@@ -1,1 +1,1 @@
-pmbot: python -m pmbot
+pmbot: python3 -m pmbot

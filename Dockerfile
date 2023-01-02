@@ -6,4 +6,4 @@ WORKDIR /app
 COPY . .
 RUN python -m pip install --no-cache-dir -U pip wheel setuptools
 RUN pip install --no-cache-dir -r requirements.txt
-CMD [ "python", "-m", "pmbot" ]
+CMD [ "python3", "-m", "pmbot" ]
