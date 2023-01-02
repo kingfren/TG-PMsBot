@@ -1,38 +1,46 @@
 {
-    "name": "TG-PMsBot",
+    "name": "TG PMsBot",
     "description": "A Telegram PMBot to forward Messages to Owner.",
     "logo": "https://graph.org/file/5b08963ece50cfdbe7a2a.jpg",
-    "keywords": ["Telegram", "Python", "PMBot", "DMBot", "Feedback", "Giveaway"],
+    "keywords": [
+        "Telethon",
+        "PMBot",
+        "Python",
+        "Feedback",
+        "DMBot"
+    ],
     "repository": "https://github.com/libgnu/TG-PMsBot",
-    "success_url": "https://t.me/Telegram",
+    "website": "https://telegram.org",
+    "success_url": "https://t.me/libgnu",
+    "stack": "heroku-22",
     "env": {
         "API_ID": {
             "description": "Your own API_ID, Get it from my.telegram.org.",
-            "value": "12345"
+            "value": ""
         },
         "API_HASH": {
             "description": "Your own API_HASH, Get it from my.telegram.org.",
-            "value": "3d2c3b4a..."
+            "value": ""
         },
         "BOT_TOKEN": {
             "description": "Bot Token of your Bot, Get it from @BotFather on Telegram.",
-            "value": "12345:abcdef..."
+            "value": ""
+        },
+        "REDIS_URI": {
+            "description": "Redis endpoint URL, from redislabs.com",
+            "value": ""
+        },
+        "REDIS_PASSWORD": {
+            "description": "Redis endpoint Password, from redislabs.com",
+            "value": ""
         },
         "OWNER_ID": {
             "description": "Your Telegram ID, Get it from @MissRose_Bot on Telegram.",
-            "value": "500xxxxxxx"
-        },
-        "REDIS_URI": {
-            "description": "Your Redis endpoint URI, Get it from redislabs.com",
-            "value": "redis-10000.a00.us..."
-        },
-        "REDIS_PASSWORD": {
-            "description": "Your Redis endpoint password, Get it from redislabs.com",
-            "value": "AbC123dEfxyz..."
+            "value": ""
         },
         "FORCE_SUBSCRIBE": {
             "description": "Force Subscribe Channel/Group (where bot is added), Give its ID or Username. (Not Required)",
-            "value": "-100xxxxxxxxxx",
+            "value": "",
             "required": false
         }
     },
@@ -41,10 +49,5 @@
             "quantity": 1,
             "size": "free"
         }
-    },
-    "buildpacks": [
-    {
-        "url":"heroku/python"
-    },
-    ]
+    }
 }
