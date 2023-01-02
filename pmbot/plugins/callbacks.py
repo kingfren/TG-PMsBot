@@ -5,8 +5,8 @@ from platform import python_version
 from telethon.events import callbackquery
 from telethon import Button, __version__
 
-from ..helpers import mention, time_formatter
 from .. import bot, redis, Config, __bot_version__
+from ..helpers import mention, time_formatter, fsub_checker
 from . import (
     get_display_name,
     HELP_STRING,
@@ -35,12 +35,7 @@ async def callbacks(e):
         buttons = START_BUTTONS.copy()
         if e.sender_id == Config.OWNER_ID:
             buttons.append([Button.inline("Stats Of Bot ⌛", data="CB_stats")])
-        else:
-            buttons.append([Button.inline("Help 📘", data="CB_help")])
-        await e.edit(
-            START_STRING.format(mention(e.sender)),
-            buttons=buttons,
-        )
+        await e.edit(START_STRING.format(mention(e.sender)), buttons=buttons)
 
     elif cb_data == "stats":
         allUsers = await redis.get_key("_PMBOT_USERS")

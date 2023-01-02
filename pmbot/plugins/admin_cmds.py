@@ -140,7 +140,7 @@ async def list_banned_users(e):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-@pmbot(pattern="broadcast", take_args=True, owner_only=True)
+@pmbot(pattern="broadcast", owner_only=True)
 async def broad_cast(e):
     sleep_time = 5
     if not e.is_reply:
@@ -180,4 +180,4 @@ async def broad_cast(e):
         edit_msg += (
             f"\n**Failed in {failed} Users** \n\n__failed chats are saved in logs__"
         )
-    await my_msg.edit(last)
+    await my_msg.edit(edit_msg)
