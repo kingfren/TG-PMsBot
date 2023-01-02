@@ -43,7 +43,7 @@ imp_vars = (
     "REDIS_PASSWORD",
     "OWNER_ID",
 )
-missing = list(filter(getattr(Config, key, None), imp_vars))
+missing = list(filter(lambda i: not getattr(Config, i, None), imp_vars))
 if missing:
     LOGS.critical(f"Some Compulsory Vars are Missing:  {', '.join(missing)}")
     quit()
