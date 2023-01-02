@@ -64,7 +64,7 @@ async def callbacks(e):
         edit_text = CB_ABOUT_STRING.format(
             my_name=get_display_name(bot.me),
             my_username=bot.me.username,
-            my_version="v" + __bot_version__,
+            my_version=__bot_version__,
             owner=mention(bot.owner),
             python=python_version(),
             telethon=__version__,

@@ -84,7 +84,7 @@ async def set_fsub_chat():
             if full.full_chat.exported_invite:
                 invite_link = full.full_chat.exported_invite.link
             else:
-                raise TypeError("Invite User Permission Missing")
+                raise TypeError("Invite User Permission Missing..")
 
         FSUB_CHANNEL.add_data((entity, invite_link))
         return entity
@@ -95,7 +95,11 @@ async def set_fsub_chat():
 async def fsub_checker(user_id):
     if not FSUB_CHANNEL():
         await set_fsub_chat()
-    if user_id == Config.OWNER_ID or user_id in FSUBBED_USERS():
+    if (
+        user_id == Config.OWNER_ID
+        or user_id in FSUBBED_USERS()
+        or not FSUB_CHANNEL()  # fsub error
+    ):
         return True
     try:
         await bot.get_permissions(FSUB_CHANNEL()[0][0], user_id)

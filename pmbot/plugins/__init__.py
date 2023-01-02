@@ -43,10 +43,9 @@ HELP_STRING = """
 """
 
 START_STRING = """
-**Hello** {} !! 👋
+**Hello,** {} ✨👋✨
 
-**All of your Messages will be Forwarded to my Owner**
-🤓
+**Send me a Message and I will Forward it to my Master.** 🐥
 """
 
 START_BUTTONS = [
@@ -57,11 +56,11 @@ START_BUTTONS = [
 ]
 
 CB_STAT_STRING = """
-• I'm Online Since {time}
+**• I'm Online Since {time}
 
-• Currently, I have {users} Users in My Database."
+• Currently, I have** `{users}` **Users in My Database.** ⭐
 
-• I have Forwarded you total of {total_msg} messages in my Lifetime 🤓
+__• I have Forwarded {total_msg} messages so far.__ ⭐
 """
 
 CB_ABOUT_STRING = """
@@ -74,9 +73,9 @@ Send me any message I will forward it to my Owner.**
 
 🔄 **Source Code:**  [{my_version}]({source})
 
-📝 **Language:**  [Python {python}](https://docs.python.org/3)
+📝 **Language:**  [Python v{python}](https://docs.python.org/3)
 
-📚 **Library:**  [Telethon {telethon}](https://docs.telethon.dev)
+📚 **Library:**  [Telethon v{telethon}](https://docs.telethon.dev)
 
 ‍💻 **Developer:**  [@libgnu](https://telegram.dog/spemgod)
 """

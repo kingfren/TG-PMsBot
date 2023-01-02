@@ -60,6 +60,8 @@ async def startup_funcs():
         if fsub:
             channel = ("@" + fsub.username) if fsub.username else fsub.title
             LOGS.info(f"Force Subscribe Channel Set to - {channel}")
+        else:
+            LOGS.warning("Force Subscribe is Disabled. 🚫")
 
 
 async def main():

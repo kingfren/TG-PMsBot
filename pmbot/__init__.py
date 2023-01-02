@@ -1,6 +1,6 @@
 __all__ = ["bot", "Config", "redis", "LOGS"]
 
-__bot_version__ = "3.5.3"
+__bot_version__ = "3.5.5"
 
 
 from telethon import TelegramClient
