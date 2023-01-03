@@ -1,3 +1,4 @@
+import asyncio
 from re import compile
 from time import time
 from platform import python_version
