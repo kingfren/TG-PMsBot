@@ -42,7 +42,7 @@ This Bot can forward Messages between the Owner and other Users of Bot.
 `TZ` : Your TimeZone; Default is Asia/Kolkata.
 
 ### Deploying on Heroku
-[![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/libgnu/TG-PMsBot)
+[![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/kingfren/TG-PMsBot)
 
 ### Deploying on VPS
 ```sh
